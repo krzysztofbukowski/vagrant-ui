@@ -1,6 +1,7 @@
 const electron = require('electron');
 const app = electron.app; // Module to control application life.
 const BrowserWindow = electron.BrowserWindow; // Module to create native browser window.
+const child_process = require('child_process');
 
 // Report crashes to our server.
 electron.crashReporter.start();
@@ -30,8 +31,19 @@ app.on('ready', function() {
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + '/views/index.html');
 
+    mainWindow.webContents.on('did-finish-load', function() {
+        child_process.exec('vagrant global-status', function(
+            error, stdout,
+            stderr) {
+            mainWindow.webContents.send(
+                'vagrant-status', stdout);
+        })
+    });
+
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
+
+
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

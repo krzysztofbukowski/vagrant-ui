@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="../css/app.css"/>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <pre id="output"></pre>
   </body>
+  <script>
+      require('electron').ipcRenderer.on('vagrant-status', function(event, message) {
+        document.getElementById('output').innerHTML = message;
+      });
+    </script>
 </html>
