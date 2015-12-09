@@ -29,7 +29,7 @@ app.on('ready', function() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/views/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     mainWindow.webContents.on('did-finish-load', function() {
         child_process.exec('vagrant global-status', function(
@@ -41,7 +41,7 @@ app.on('ready', function() {
     });
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
 
 
