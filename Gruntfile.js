@@ -110,8 +110,26 @@ module.exports = function(grunt) {
             //     ]
             // }
         }
-
     })
+
+    grunt.registerTask('execute', function() {
+        var exec = require('child_process').exec;
+
+        var done = this.async();
+        exec('electron .', {
+            cwd: '.'
+        }, function(error, stdout, stderr) {
+            if (error) {
+                grunt.log(error);
+            }
+            done();
+        });
+    });
+
+    grunt.registerTask('run', [
+        'build',
+        'execute'
+    ])
 
     grunt.registerTask('build', [
         'clean',
